@@ -1,0 +1,9 @@
+<h2>Todo List</h2>
+<button routerLink="/todo/add">Add</button>
+<ul>
+  <li *ngFor="let todo of todos">
+    <a [routerLink]="['/todo', todo.id]">
+       {{ todo.title }}
+    </a>
+  </li>
+</ul>
