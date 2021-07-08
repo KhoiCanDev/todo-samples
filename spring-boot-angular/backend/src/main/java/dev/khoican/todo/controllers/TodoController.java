@@ -2,8 +2,10 @@ package dev.khoican.todo.controllers;
 
 import dev.khoican.todo.models.Todo;
 import dev.khoican.todo.repositories.TodoRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +22,7 @@ public class TodoController {
     @GetMapping
     public List<Todo> GetList() {
         var result = new ArrayList<Todo>();
-        var toDoIterable = repo.findAll();
+        var toDoIterable = repo.findAll(Sort.by("createdDate").descending());
         toDoIterable.forEach(result::add);
         return result;
     }
@@ -39,6 +41,7 @@ public class TodoController {
 
     @PostMapping
     public Todo Add(@RequestBody() Todo todo) {
+        todo.setCreatedDate(Instant.now());
         var toDo = repo.save(todo);
         return toDo;
     }

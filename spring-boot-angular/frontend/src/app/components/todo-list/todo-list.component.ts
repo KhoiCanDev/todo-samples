@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Todo } from 'src/app/models/todo';
 import { TodoService } from 'src/app/services/todo.service';
 
@@ -8,9 +9,13 @@ import { TodoService } from 'src/app/services/todo.service';
   styleUrls: ['./todo-list.component.sass']
 })
 export class TodoListComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'title', 'done']
   todos!: Todo[]
 
-  constructor(private todoService: TodoService) { }
+  constructor(
+    private todoService: TodoService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
     this.getTodoList()
@@ -18,5 +23,9 @@ export class TodoListComponent implements OnInit {
 
   async getTodoList() {
     this.todos = await this.todoService.getTodoList()
+  }
+
+  editTodo(todo: Todo) {
+    this.router.navigate(['/todo', todo.id])
   }
 }

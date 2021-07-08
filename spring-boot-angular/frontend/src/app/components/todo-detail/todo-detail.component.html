@@ -1,21 +1,22 @@
-<a [routerLink]="['/todo']">
-  <-Back< /a>
-    <h2 *ngIf="todoForm.value.id">Update Todo.</h2>
-    <h2 *ngIf="!todoForm.value.id">Add Todo</h2>
-    <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
-      <input id="id" type="hidden" formControlName="id">
-
-      <label for="title">Title: </label>
-      <input id="title" type="text" formControlName="title">
-      <br>
-
-      <label for="description">Description: </label>
-      <textarea id="description" formControlName="description"></textarea>
-      <br>
-
-      <label for="done">Done: </label>
-      <input id="done" type="checkbox" formControlName="done">
-      <br>
-
-      <button type="submit" [disabled]="!todoForm.valid">Submit</button>
+<div fxLayout="column">
+  <a [routerLink]="['/todo']">← Back</a>
+  <h2 *ngIf="!isAdd">Update Todo.</h2>
+  <h2 *ngIf="isAdd">Add Todo</h2>
+  <div fxLayout="row">
+    <form fxFlex="60" fxFlexOffset="20" [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+      <div fxLayout="column" fxLayoutAlign="space-around stretch" fxLayoutGap="16px">
+        <input id="id" type="hidden" formControlName="id">
+        <mat-form-field appearance="fill">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+        <mat-checkbox matInput id="done" type="checkbox" formControlName="done">Done</mat-checkbox>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!todoForm.valid">Submit</button>
+      </div>
     </form>
+  </div>
+</div>

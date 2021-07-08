@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Todo } from 'src/app/models/todo';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TodoService } from 'src/app/services/todo.service';
 
 @Component({
@@ -16,21 +16,28 @@ export class TodoDetailComponent implements OnInit {
     description: new FormControl(''),
     done: new FormControl(''),
   })
+  isAdd = true
 
   constructor(
     private todoService: TodoService,
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.params.id
+    if (id) {
+      this.isAdd = false
+    }
     this.bindForm()
   }
 
   async bindForm() {
-    const id = await this.route.snapshot.params.id
+    const id = this.route.snapshot.params.id
     if (id) {
       const model = await this.todoService.getTodoDetail(id)
       this.todoForm.setValue(model)
+      this.isAdd = false
     }
   }
 
@@ -43,5 +50,8 @@ export class TodoDetailComponent implements OnInit {
       result = await this.todoService.addTodo(formValue)
     }
     this.router.navigate(['/todo', result.id])
+    this.snackBar.open('Todo saved', undefined, {
+      duration: 3000
+    })
   }
 }

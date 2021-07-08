@@ -1,1 +1,29 @@
-<router-outlet></router-outlet>
+<div fxLayout="column" class="container">
+  <mat-toolbar color="primary">
+    <span>Todo App</span>
+  </mat-toolbar>
+  <div fxFlex>
+    <mat-sidenav-container>
+      <mat-sidenav mode="side" opened>
+        <mat-nav-list>
+          <a mat-list-item href="/">
+            <mat-icon matListIcon>list</mat-icon>
+            <span>Todo List</span>
+          </a>
+          <mat-divider></mat-divider>
+          <a mat-list-item href="/settings">
+            <mat-icon matListIcon>settings</mat-icon>
+            <span>Settings</span>
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <div class="content-container">
+          <mat-card class="card-content-container">
+            <router-outlet></router-outlet>
+          </mat-card>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>
